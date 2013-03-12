@@ -1,0 +1,32 @@
+#include <iostream>
+#include "AKThread.h"
+#include "AKMTTask.h"
+
+
+int main(int argc, char const *argv[])
+{
+	AKThread th1, th2;
+	std::cout << &th1 << " : AKThread\n";
+	std::cout << &th2 << " : AKThread\n";
+
+	AKMTTask task1, task2, task3;
+	task1.setThread(&th1);
+	task2.setThread(&th1);
+	task3.setThread(&th2);
+
+	task1.addSuccessor(&task2);
+	task1.addSuccessor(&task3);
+
+	std::cout	<< &task1 << " : " << task1.successors().size() << " successors; "
+				<< task1.predecessors().size() << " predecessors;\n";
+
+	std::cout	<< &task2 << " : " << task2.successors().size() << " successors; "
+				<< task2.predecessors().size() << " predecessors;\n";
+
+	std::cout	<< &task3 << " : " << task3.successors().size() << " successors; "
+				<< task3.predecessors().size() << " predecessors;\n";
+
+	std::cout << "Continuation of task1 : " << task1.continuation() << std::endl;
+
+	return 0;
+}
